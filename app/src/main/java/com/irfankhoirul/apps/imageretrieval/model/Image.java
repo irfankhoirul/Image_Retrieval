@@ -1,52 +1,130 @@
 package com.irfankhoirul.apps.imageretrieval.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by Irfan Khoirul on 6/25/2016.
  */
-public class Image {
-    private String name;
-    private String link;
-    private double[] mean; // 0 : red, 1 : green, 2 : blue
-    private double[] std; // 0 : red, 1 : green, 2 : blue
-    private double[] median; // 0 : red, 1 : green, 2 : blue
+public class Image extends RealmObject {
+    @PrimaryKey
+    private String url;
+    private double meanRed;
+    private double meanGreen;
+    private double meanBlue;
+    private double stdRed;
+    private double stdGreen;
+    private double stdBlue;
+    private double medianRed;
+    private double medianGreen;
+    private double medianBlue;
 
-    public String getName() {
-        return name;
+    private double distance;
+
+    public double getDistance() {
+        return distance;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
-    public String getLink() {
-        return link;
+    public String getUrl() {
+        return url;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public double[] getMean() {
-        return mean;
+    public double getMeanRed() {
+        return meanRed;
     }
 
-    public void setMean(double[] mean) {
-        this.mean = mean;
+    public void setMeanRed(double meanRed) {
+        this.meanRed = meanRed;
     }
 
-    public double[] getStd() {
-        return std;
+    public double getMeanGreen() {
+        return meanGreen;
     }
 
-    public void setStd(double[] std) {
-        this.std = std;
+    public void setMeanGreen(double meanGreen) {
+        this.meanGreen = meanGreen;
     }
 
-    public double[] getMedian() {
-        return median;
+    public double getMeanBlue() {
+        return meanBlue;
     }
 
-    public void setMedian(double[] median) {
-        this.median = median;
+    public void setMeanBlue(double meanBlue) {
+        this.meanBlue = meanBlue;
+    }
+
+    public double getStdRed() {
+        return stdRed;
+    }
+
+    public void setStdRed(double stdRed) {
+        this.stdRed = stdRed;
+    }
+
+    public double getStdGreen() {
+        return stdGreen;
+    }
+
+    public void setStdGreen(double stdGreen) {
+        this.stdGreen = stdGreen;
+    }
+
+    public double getStdBlue() {
+        return stdBlue;
+    }
+
+    public void setStdBlue(double stdBlue) {
+        this.stdBlue = stdBlue;
+    }
+
+    public double getMedianRed() {
+        return medianRed;
+    }
+
+    public void setMedianRed(double medianRed) {
+        this.medianRed = medianRed;
+    }
+
+    public double getMedianGreen() {
+        return medianGreen;
+    }
+
+    public void setMedianGreen(double medianGreen) {
+        this.medianGreen = medianGreen;
+    }
+
+    public double getMedianBlue() {
+        return medianBlue;
+    }
+
+    public void setMedianBlue(double medianBlue) {
+        this.medianBlue = medianBlue;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        str += "URL : " + url + "\n";
+        str += "meanRed : " + meanRed + "\n";
+        str += "meanGreen : " + meanGreen + "\n";
+        str += "meanBlue : " + meanBlue + "\n";
+        str += "stdRed : " + stdRed + "\n";
+        str += "stdGreen : " + stdGreen + "\n";
+        str += "stdBlue : " + stdBlue + "\n";
+
+        str += "medianRed : " + medianRed + "\n";
+        str += "medianGreen : " + medianGreen + "\n";
+        str += "medianBlue : " + medianBlue + "\n\n";
+
+        return str;
+
     }
 }
