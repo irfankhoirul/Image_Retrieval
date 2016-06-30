@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Image Retrieval</string>
+    <string name="app_name">Glitzee</string>
     <string-array name="get_photo_method">
         <item>Camera</item>
         <item>Gallery</item>

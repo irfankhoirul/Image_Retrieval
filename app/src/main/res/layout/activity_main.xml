@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -15,7 +16,8 @@
         android:id="@+id/btLoadData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Load Data" />
+        android:text="Load Data"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -25,16 +27,16 @@
             android:id="@+id/imgSource"
             android:layout_width="256dp"
             android:layout_height="256dp"
-            android:visibility="gone"
             android:layout_gravity="center_horizontal|top"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imgDataTest"
             android:layout_width="256dp"
             android:layout_height="256dp"
             android:layout_gravity="center_horizontal|top"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/blue_circle" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -47,9 +49,13 @@
 
     <Button
         android:id="@+id/btTestData"
-        android:visibility="gone"
-        android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search" />
+        android:layout_marginTop="16dp"
+        android:paddingLeft="96dp"
+        android:paddingRight="96dp"
+        android:text="Search"
+        android:visibility="visible" />
 
 </LinearLayout>

@@ -7,16 +7,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.irfankhoirul.apps.imageretrieval.data.Data;
@@ -30,11 +29,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -180,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         Picasso.with(this)
                 .load(URL)
+                .placeholder(R.drawable.blue_circle)
                 .resize(512, 512)
 //                .centerCrop()
                 .into(imgSource, new Callback() {
@@ -253,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        progressBar.setVisibility(View.VISIBLE);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_IMAGE) {
                 if (data != null) {
@@ -261,17 +260,19 @@ public class MainActivity extends AppCompatActivity {
                     bitmapOri = CameraUtils.rotateImageIfRequired(path, BitmapFactory.decodeFile(path));
 //                    imgDataTest.setImageBitmap(bitmapOri);
 
-                    Uri uri = Uri.fromFile(new File(path));
+                    final Uri uri = Uri.fromFile(new File(path));
                     Picasso.with(this)
                             .load(uri)
+                            .placeholder(R.drawable.blue_circle)
                             .resize(512, 512)
 //                          .centerCrop()
                             .into(imgDataTest, new Callback() {
                                 @Override
                                 public void onSuccess() {
                                     Bitmap bitmap = ((BitmapDrawable) imgDataTest.getDrawable()).getBitmap();
-                                    dataTest = getImageElement(bitmap, null);
+                                    dataTest = getImageElement(bitmap, uri.toString());
                                     Log.v("DataTestElement", dataTest.toString());
+                                    progressBar.setVisibility(View.GONE);
                                 }
 
                                 @Override
@@ -282,23 +283,26 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             } else if (requestCode == SELECT_CAMERA_CAPTURE) {
-                Log.v("cek_path", path);
+                Log.v("Data", data.getData().toString());
                 if (path != null) {
+                    Log.v("cek_path", path);
                     BitmapUtils.galleryAddPic(this, file);
                     bitmapOri = CameraUtils.rotateImageIfRequired(path, BitmapFactory.decodeFile(path));
 //                    dataTest = getImageElement(bitmapOri, null);
 //                    imgDataTest.setImageBitmap(bitmapOri);
-                    Uri uri = Uri.fromFile(new File(path));
+                    final Uri uri = Uri.fromFile(new File(path));
                     Picasso.with(this)
                             .load(uri)
+                            .placeholder(R.drawable.blue_circle)
                             .resize(512, 512)
 //                          .centerCrop()
                             .into(imgDataTest, new Callback() {
                                 @Override
                                 public void onSuccess() {
                                     Bitmap bitmap = ((BitmapDrawable) imgDataTest.getDrawable()).getBitmap();
-                                    dataTest = getImageElement(bitmap, null);
+                                    dataTest = getImageElement(bitmap, uri.toString());
                                     Log.v("DataTestElement", dataTest.toString());
+                                    progressBar.setVisibility(View.GONE);
                                 }
 
                                 @Override
@@ -311,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             file = null;
             path = null;
+            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -379,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("dataTest", new Gson().toJson(dataTest));
         intent.putStringArrayListExtra("images", strImageList);
         startActivity(intent);
     }
